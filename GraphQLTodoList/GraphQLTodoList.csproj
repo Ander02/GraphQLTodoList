@@ -5,11 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Types\" />
+    <Folder Include="Features\Tasks\" />
+    <Folder Include="Features\Users\" />
+    <Folder Include="Infraestructure\Filters\" />
+    <Folder Include="Infraestructure\Middlewares\" />
+    <Folder Include="Infraestructure\Exceptions\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
+    <PackageReference Include="GraphQL" Version="0.17.3" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
   </ItemGroup>
 
 </Project>
