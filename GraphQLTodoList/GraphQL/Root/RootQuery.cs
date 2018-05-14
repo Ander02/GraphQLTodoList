@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using GraphQLTodoList.Features.Users.Find;
+using GraphQLTodoList.Features.Users;
 using GraphQLTodoList.GraphQL.Types.InputTypes.Querys;
 using GraphQLTodoList.GraphQL.Types.OutputTypes;
 using MediatR;
@@ -28,7 +28,7 @@ namespace GraphQLTodoList.GraphQL.Root
                 },
                 resolve: async (context) =>
                 {
-                    var input = context.GetArgument<FindAllUsersQuery>("params");
+                    var input = context.GetArgument<FindAll.Query>("params");
 
                     var result = await mediator.Send(input);
 

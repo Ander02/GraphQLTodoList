@@ -1,5 +1,4 @@
-﻿using GraphQLTodoList.Features.Users.Register;
-using GraphQLTodoList.Features.Views;
+﻿using GraphQLTodoList.Features.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,7 +19,7 @@ namespace GraphQLTodoList.Features.Users
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] SearchManyUsersQuery command)
+        public async Task<IActionResult> Register([FromBody] Register.Command command)
         {
             var result = await _mediator.Send(command);
 

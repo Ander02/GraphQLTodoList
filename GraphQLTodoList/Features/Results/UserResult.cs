@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Views
+namespace GraphQLTodoList.Features.Results
 {
-    public class UserView
+    public class UserResult
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -16,11 +16,11 @@ namespace GraphQLTodoList.Features.Views
         public DateTime? CreatedAt { get; set; }
         public DateTime? DeletedAt { get; set; } = null;
 
-        public List<TaskView> Tasks { get; set; } = new List<TaskView>();
+        public List<TaskResult> Tasks { get; set; } = new List<TaskResult>();
 
-        public UserView() { }
+        public UserResult() { }
 
-        public UserView(User user)
+        public UserResult(User user)
         {
             this.Id = user.Id;
             this.Name = user.Name;
@@ -30,7 +30,7 @@ namespace GraphQLTodoList.Features.Views
             this.CreatedAt = user.CreatedAt;
             this.DeletedAt = user.DeletedAt;
 
-            this.Tasks = user.Tasks.Select(t => new TaskView(t)).ToList();
+            this.Tasks = user.Tasks?.Select(t => new TaskResult(t)).ToList();
         }
     }
 }

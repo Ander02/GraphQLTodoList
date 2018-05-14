@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using GraphQLTodoList.Features.Views;
+using GraphQLTodoList.Features.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GraphQLTodoList.GraphQL.Types.OutputTypes
 {
-    public class UserType : ObjectGraphType<UserView>
+    public class UserType : ObjectGraphType<UserResult>
     {
         public UserType()
         {

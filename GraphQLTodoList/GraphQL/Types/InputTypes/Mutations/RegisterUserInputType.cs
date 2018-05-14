@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using GraphQLTodoList.Features.Views;
+using GraphQLTodoList.Features.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;

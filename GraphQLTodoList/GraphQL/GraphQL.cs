@@ -43,11 +43,12 @@ namespace GraphQLTodoList.GraphQL
 
             protected override async Task<ExecutionResult> HandleCore(GQuery query)
             {
-                var result = await _documentExecuter.ExecuteAsync(new ExecutionOptions
+                var result = await _documentExecuter.ExecuteAsync(options =>
                 {
-                    Schema = _schema,
-                    Query = query.Query,
-                    Inputs = query.Variables != null ? query.Variables.ToString().ToInputs() : "".ToInputs()
+                    options.Schema = _schema;
+                    options.Query = query.Query;
+                    options.Inputs = query.Variables != null ? query.Variables.ToString().ToInputs() : "".ToInputs();
+
                 }).ConfigureAwait(false);
 
                 //if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));

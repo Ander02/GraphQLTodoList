@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using GraphQLTodoList.Features.Users.Register;
+using GraphQLTodoList.Features.Users;
 using GraphQLTodoList.GraphQL.Types.InputTypes.Mutations;
 using GraphQLTodoList.GraphQL.Types.OutputTypes;
 using MediatR;
@@ -14,7 +14,7 @@ namespace GraphQLTodoList.GraphQL.Root
     {
         public RootMutation() { }
 
-        
+
         public RootMutation(IMediator mediator)
         {
             #region Users
@@ -31,7 +31,7 @@ namespace GraphQLTodoList.GraphQL.Root
                 },
                 resolve: async (context) =>
                 {
-                    var input = context.GetArgument<SearchManyUsersQuery>("input");
+                    var input = context.GetArgument<Register.Command>("input");
 
                     var result = await mediator.Send(input);
 

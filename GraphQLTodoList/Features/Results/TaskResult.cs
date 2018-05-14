@@ -1,9 +1,9 @@
 ﻿using GraphQLTodoList.Domain;
 using System;
 
-namespace GraphQLTodoList.Features.Views
+namespace GraphQLTodoList.Features.Results
 {
-    public class TaskView
+    public class TaskResult
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -11,11 +11,11 @@ namespace GraphQLTodoList.Features.Views
         public DateTime? CreatedAt { get; set; }
         public DateTime? CompletedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
-        public UserView User { get; set; }
+        public UserResult User { get; set; }
 
-        public TaskView() { }
+        public TaskResult() { }
 
-        public TaskView(Task task)
+        public TaskResult(Task task)
         {
             this.Id = task.Id;
             this.Name = task.Name;
@@ -24,7 +24,7 @@ namespace GraphQLTodoList.Features.Views
             this.CompletedAt = task.CompletedAt;
             this.DeletedAt = task.CompletedAt;
 
-            this.User = new UserView(task.User);
+            this.User = task.User != null ? new UserResult(task.User) : null;
         }
     }
 }
