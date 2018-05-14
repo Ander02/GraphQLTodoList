@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FluentValidation.AspNetCore;
 using GraphQL;
 using GraphQL.Types;
-using GraphQLTodoList.Features.Root;
+using GraphQLTodoList.GraphQL.Root;
+using GraphQLTodoList.GraphQL.Types.InputTypes.Mutations;
+using GraphQLTodoList.GraphQL.Types.InputTypes.Querys;
+using GraphQLTodoList.GraphQL.Types.OutputTypes;
 using GraphQLTodoList.Infraestructure.Database;
-using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,24 +17,21 @@ namespace GraphQLTodoList
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             #region Application Config
 
-            services.AddMvc((options) =>
-            {
-                //options.Filters.Add(typeof(ValidationActionFilter));
-            })
+            services.AddMvc()
             //.AddFeatureFolders()
-            //.AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>())
+            .AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>())
             .AddJsonOptions(options =>
             {
                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
@@ -47,60 +42,55 @@ namespace GraphQLTodoList
             services.AddMediatR(typeof(Startup));
             #endregion
 
-
             #region Database Config
 
             services.AddDbContext<Db>((options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            #endregion
+
+            #region FluentValidator Config
 
             #endregion
 
             #region GraphQL Config
 
-            #region Types
+            //Output Types
+            services.AddTransient<UserType>();
+            services.AddTransient<TaskType>();
 
+            //Querys Input Type
+            services.AddTransient<SearchUserInputType>();
 
-            #endregion
+            //Mutations Input Type
+            services.AddTransient<RegisterUserInputType>();
 
-            #region Mutation Input TYpes
-
-
-            #endregion
-
-            #region Querys Input Type
-
-
-            #endregion
-
-            #region Root
-
+            //Roots
             services.AddScoped<RootQuery>();
             services.AddScoped<RootMutation>();
-            #endregion
 
-            #region Schema Config
-
+            //Schema Config
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             var servicesProvider = services.BuildServiceProvider();
-            services.AddScoped<ISchema>(schema => new RootSchema(type => (GraphType)servicesProvider.GetService(type))
+            services.AddScoped<ISchema>(schema => new GraphSchema(type => (GraphType)servicesProvider.GetService(type))
             {
                 Query = servicesProvider.GetService<RootQuery>(),
                 Mutation = servicesProvider.GetService<RootMutation>()
             });
-            #endregion
-
             #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            #region Development Config
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseGraphiQl();
             }
+            #endregion
 
             #region Cors Config
             app.UseCors(builder => builder.AllowAnyOrigin().WithMethods(new string[] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" }).AllowAnyHeader());

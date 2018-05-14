@@ -4,16 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Root
+namespace GraphQLTodoList.GraphQL.Root
 {
-    public class RootSchema : Schema
+    public class GraphSchema : Schema
     {
-        public RootSchema(Func<Type, GraphType> resolve) : base(resolve)
+        public GraphSchema(Func<Type, GraphType> resolve) : base(resolve)
         {
             //Roots
             Query = (RootQuery) resolve(typeof(RootQuery));
             Mutation = (RootMutation) resolve(typeof(RootMutation));
         }
-
     }
 }

@@ -19,7 +19,7 @@ namespace CQRSTemplate
             if (args.Contains("seed"))
             {
                 runSeed = true;
-                args = args.Where(d => d != "seed").ToArray();
+                args = args.Where(a => a != "seed").ToArray();
             }
 
             var host = BuildWebHost(args);

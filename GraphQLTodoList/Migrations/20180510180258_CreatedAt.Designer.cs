@@ -11,9 +11,10 @@ using System;
 namespace GraphQLTodoList.Migrations
 {
     [DbContext(typeof(Db))]
-    partial class DbModelSnapshot : ModelSnapshot
+    [Migration("20180510180258_CreatedAt")]
+    partial class CreatedAt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
