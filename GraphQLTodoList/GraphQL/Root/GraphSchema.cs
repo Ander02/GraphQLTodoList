@@ -12,7 +12,7 @@ namespace GraphQLTodoList.GraphQL.Root
         {
             //Roots
             Query = (RootQuery) resolve(typeof(RootQuery));
-            Mutation = (RootMutation) resolve(typeof(RootMutation));
+            Mutation = (RootMutation) resolve(typeof(RootMutation));            
         }
     }
 }

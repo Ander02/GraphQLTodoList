@@ -30,7 +30,7 @@ namespace GraphQLTodoList.Features.Results
             this.CreatedAt = user.CreatedAt;
             this.DeletedAt = user.DeletedAt;
 
-            this.Tasks = user.Tasks?.Select(t => new TaskResult(t)).ToList();
+            //this.Tasks = user.Tasks?.Select(t => new TaskResult(t)).ToList();
         }
     }
 }

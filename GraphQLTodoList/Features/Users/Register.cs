@@ -19,8 +19,7 @@ namespace GraphQLTodoList.Features.Users
             public string Email { get; set; }
             public int Age { get; set; }
         }
-
-
+        
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()

@@ -32,6 +32,8 @@ namespace GraphQLTodoList.GraphQL.Root
 
                     var result = await mediator.Send(input);
 
+                    throw new Exception("testee");
+
                     return result;
                 });
 
