@@ -33,7 +33,6 @@ namespace GraphQLTodoList.GraphQL.Root
                     var result = await mediator.Send(query);
 
                     return result;
-
                 }));
 
             #endregion
