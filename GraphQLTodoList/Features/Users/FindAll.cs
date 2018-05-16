@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using GraphQL.Types;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
 using GraphQLTodoList.Util.Extensions;
@@ -13,11 +14,23 @@ namespace GraphQLTodoList.Features.Users
 {
     public class FindAll
     {
-        public class Query : IRequest<List<UserResult>>
+        public class Query : IRequest<List<UserResult.Full>>
         {
             public bool ShowDeleteds { get; set; } = false;
             public int Limit { get; set; } = 100;
             public int Page { get; set; } = 0;
+        }
+
+        public class InputType : InputObjectGraphType<Query>
+        {
+            public InputType()
+            {
+                Name = "FindAllUsersInputType";
+
+                Field<BooleanGraphType>(name: "ShowDeleteds");
+                Field<IntGraphType>(name: "Limit");
+                Field<IntGraphType>(name: "Page");
+            }
         }
 
         public class QueryValidator : AbstractValidator<Query>
@@ -28,7 +41,7 @@ namespace GraphQLTodoList.Features.Users
             }
         }
 
-        public class Handler : AsyncRequestHandler<Query, List<UserResult>>
+        public class Handler : AsyncRequestHandler<Query, List<UserResult.Full>>
         {
             private readonly Db _db;
 
@@ -37,7 +50,7 @@ namespace GraphQLTodoList.Features.Users
                 _db = db;
             }
 
-            protected override async Task<List<UserResult>> HandleCore(FindAll.Query query)
+            protected override async Task<List<UserResult.Full>> HandleCore(FindAll.Query query)
             {
                 if (query == null) { }
 
@@ -48,7 +61,7 @@ namespace GraphQLTodoList.Features.Users
                 dbQuery = dbQuery.OrderBy(u => u.Name);
                 dbQuery = dbQuery.Skip(query.Page * query.Limit).Take(query.Limit);
 
-                return (await dbQuery.ToListAsync()).Select(u => new UserResult(u)).ToList();
+                return (await dbQuery.ToListAsync()).Select(u => new UserResult.Full(u)).ToList();
             }
         }
     }

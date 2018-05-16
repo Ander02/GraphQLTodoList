@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using GraphQLTodoList.Features.Users;
-using GraphQLTodoList.GraphQL.Types.InputTypes.Querys;
-using GraphQLTodoList.GraphQL.Types.OutputTypes;
+using GraphQLTodoList.GraphQL.Types;
+using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,21 +21,19 @@ namespace GraphQLTodoList.GraphQL.Root
                 name: "FindAllUsers",
                 arguments: new QueryArguments
                 {
-                    new QueryArgument<SearchUserInputType>()
+                    new QueryArgument<FindAll.InputType>()
                     {
                         Name = "params"
                     }
                 },
-                resolve: async (context) =>
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var input = context.GetArgument<FindAll.Query>("params");
 
                     var result = await mediator.Send(input);
 
-                    throw new Exception("testee");
-
                     return result;
-                });
+                }));
 
             #endregion
         }

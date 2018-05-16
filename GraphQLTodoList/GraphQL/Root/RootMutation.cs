@@ -1,7 +1,6 @@
 ﻿using GraphQL.Types;
 using GraphQLTodoList.Features.Users;
-using GraphQLTodoList.GraphQL.Types.InputTypes.Mutations;
-using GraphQLTodoList.GraphQL.Types.OutputTypes;
+using GraphQLTodoList.GraphQL.Types;
 using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
@@ -25,7 +24,7 @@ namespace GraphQLTodoList.GraphQL.Root
                 name: "RegisterUser",
                 arguments: new QueryArguments
                 {
-                    new QueryArgument<RegisterUserInputType>()
+                    new QueryArgument<Register.InputType>()
                     {
                         Name = "input"
                     }

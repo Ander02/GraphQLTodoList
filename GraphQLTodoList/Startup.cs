@@ -1,10 +1,10 @@
 ﻿using FluentValidation.AspNetCore;
 using GraphQL;
+using GraphQL.Http;
 using GraphQL.Types;
+using GraphQLTodoList.Features;
 using GraphQLTodoList.GraphQL.Root;
-using GraphQLTodoList.GraphQL.Types.InputTypes.Mutations;
-using GraphQLTodoList.GraphQL.Types.InputTypes.Querys;
-using GraphQLTodoList.GraphQL.Types.OutputTypes;
+using GraphQLTodoList.GraphQL.Types;
 using GraphQLTodoList.Infraestructure.Database;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -56,28 +56,24 @@ namespace GraphQLTodoList
 
             #region GraphQL Config
 
-            //Output Types
+            //GraphQL Types
             services.AddTransient<UserType>();
             services.AddTransient<TaskType>();
 
-            //Querys Input Type
-            services.AddTransient<SearchUserInputType>();
-
-            //Mutations Input Type
-            services.AddTransient<RegisterUserInputType>();
+            //Users Input Type
+            services.AddTransient<Features.Users.FindAll.InputType>();
+            services.AddTransient<Features.Users.Register.InputType>();
 
             //Roots
             services.AddScoped<RootQuery>();
             services.AddScoped<RootMutation>();
 
             //Schema Config
+            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
-            var servicesProvider = services.BuildServiceProvider();
-            services.AddScoped<ISchema>(schema => new GraphSchema(type => (GraphType)servicesProvider.GetService(type))
-            {
-                Query = servicesProvider.GetService<RootQuery>(),
-                Mutation = servicesProvider.GetService<RootMutation>()
-            });
+
+            services.AddScoped<ISchema, GraphSchema>();
             #endregion
         }
 

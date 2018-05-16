@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.GraphQL.Types.OutputTypes
+namespace GraphQLTodoList.GraphQL.Types
 {
-    public class TaskType : ObjectGraphType<TaskResult>
+    public class TaskType : ObjectGraphType<TaskResult.Full>
     {
         public TaskType()
         {

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using GraphQL.Types;
 using GraphQLTodoList.Domain;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
@@ -14,12 +15,25 @@ namespace GraphQLTodoList.Features.Users
 {
     public class Register
     {
-        public class Command : IRequest<UserResult>
+        public class Command : IRequest<UserResult.Full>
         {
             public string Name { get; set; }
             public string Password { get; set; }
             public string Email { get; set; }
             public int Age { get; set; }
+        }
+
+        public class InputType : InputObjectGraphType<Command>
+        {
+            public InputType()
+            {
+                Name = "RegisterUserInputType";
+
+                Field<NonNullGraphType<IntGraphType>>(name: "Age");
+                Field<NonNullGraphType<StringGraphType>>(name: "Name");
+                Field<NonNullGraphType<StringGraphType>>(name: "Email");
+                Field<NonNullGraphType<StringGraphType>>(name: "Password");
+            }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -33,7 +47,7 @@ namespace GraphQLTodoList.Features.Users
             }
         }
 
-        public class Handler : AsyncRequestHandler<Command, UserResult>
+        public class Handler : AsyncRequestHandler<Command, UserResult.Full>
         {
             private readonly Db _db;
 
@@ -42,7 +56,7 @@ namespace GraphQLTodoList.Features.Users
                 _db = db;
             }
 
-            protected override async Task<UserResult> HandleCore(Command command)
+            protected override async Task<UserResult.Full> HandleCore(Command command)
             {
                 var user = new User()
                 {
@@ -56,7 +70,7 @@ namespace GraphQLTodoList.Features.Users
                 await _db.Users.AddAsync(user);
                 await _db.SaveChangesAsync();
 
-                return new UserResult(user);
+                return new UserResult.Full(user);
             }
         }
     }

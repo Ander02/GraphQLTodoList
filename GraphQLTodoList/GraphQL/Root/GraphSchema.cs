@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using GraphQL;
+using GraphQL.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace GraphQLTodoList.GraphQL.Root
 {
     public class GraphSchema : Schema
     {
-        public GraphSchema(Func<Type, GraphType> resolve) : base(resolve)
+        public GraphSchema(IDependencyResolver resolver) : base(resolver)
         {
             //Roots
-            Query = (RootQuery) resolve(typeof(RootQuery));
-            Mutation = (RootMutation) resolve(typeof(RootMutation));            
+            Query = resolver.Resolve<RootQuery>();
+            Mutation = resolver.Resolve<RootMutation>();
         }
     }
 }
