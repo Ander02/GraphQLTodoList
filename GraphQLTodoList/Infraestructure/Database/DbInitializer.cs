@@ -7,11 +7,9 @@ namespace GraphQLTodoList.Infraestructure.Database
 {
     public static class DbInitializer
     {
-
         public static async Task Initialize(Db db)
         {
             await db.SaveChangesAsync();
         }
-
     }
 }

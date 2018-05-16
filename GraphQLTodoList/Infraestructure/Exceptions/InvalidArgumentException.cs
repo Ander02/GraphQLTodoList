@@ -7,9 +7,6 @@ namespace GraphQLTodoList.Infraestructure.Exceptions
 {
     public class InvalidArgumentException : BaseException
     {
-        public InvalidArgumentException(string body) : base(400, body)
-        {
-
-        }
+        public InvalidArgumentException(string body) : base(400, body) { }
     }
 }

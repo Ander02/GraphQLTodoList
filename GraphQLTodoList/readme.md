@@ -1,4 +1,4 @@
-# GraphQL Todo List Server - Coisas a serem melhoradas 
+# GraphQL Todo List Backend - Coisas a serem melhoradas 
 
 ## Exceptions e Erros
 	

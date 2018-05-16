@@ -35,6 +35,28 @@ namespace GraphQLTodoList.GraphQL.Root
                     return result;
                 }));
 
+            //Find By Id
+            FieldAsync<UserType>(
+                name: "FindUserById",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "Id"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var query = new FindById.Query
+                    {
+                        Id = context.GetArgument<Guid>("Id")
+                    };
+
+                    var result = await mediator.Send(query);
+
+                    return result;
+                }));
+
             #endregion
         }
     }

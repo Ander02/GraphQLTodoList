@@ -25,5 +25,8 @@ namespace GraphQLTodoList.Features.Users
 
             return Created(this.Request.Path + "/" + result.Id, result);
         }
+
+        [HttpGet]
+        public async Task<List<UserResult.Full>> FindAll([FromQuery] FindAll.Query query) => await _mediator.Send(query);
     }
 }

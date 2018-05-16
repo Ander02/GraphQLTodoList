@@ -16,7 +16,7 @@ namespace GraphQLTodoList.Features.Users
     {
         public class Query : IRequest<List<UserResult.Full>>
         {
-            public bool ShowDeleteds { get; set; } = false;
+            public bool ShowDeleteds { get; set; } = true;
             public int Limit { get; set; } = 100;
             public int Page { get; set; } = 0;
         }
@@ -52,7 +52,7 @@ namespace GraphQLTodoList.Features.Users
 
             protected override async Task<List<UserResult.Full>> HandleCore(FindAll.Query query)
             {
-                if (query == null) {  }
+                if (query == null) { }
 
                 var dbQuery = _db.Users.Include(u => u.Tasks).AsQueryable();
 
