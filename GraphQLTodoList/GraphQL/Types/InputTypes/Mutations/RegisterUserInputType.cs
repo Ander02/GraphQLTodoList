@@ -1,5 +1,6 @@
 ﻿using GraphQL.Types;
 using GraphQLTodoList.Features.Results;
+using GraphQLTodoList.Features.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GraphQLTodoList.GraphQL.Types.InputTypes.Mutations
 {
-    public class RegisterUserInputType : InputObjectGraphType
+    public class RegisterUserInputType : InputObjectGraphType<Register.Command>
     {
         public RegisterUserInputType()
         {

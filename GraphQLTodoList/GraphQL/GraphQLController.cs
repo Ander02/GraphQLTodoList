@@ -20,9 +20,9 @@ namespace GraphQLTodoList.GraphQL
             if (query == null) return BadRequest();
 
             var result = await this._mediator.Send(query);
-
+            
             if (result.Errors?.Count > 0) return BadRequest(result);
-
+            
             return Ok(result);
         }
     }

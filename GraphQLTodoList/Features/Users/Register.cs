@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using GraphQLTodoList.Domain;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
+using GraphQLTodoList.Infraestructure.Exceptions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace GraphQLTodoList.Features.Users
             public string Email { get; set; }
             public int Age { get; set; }
         }
-        
+
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()

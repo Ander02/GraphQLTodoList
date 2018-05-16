@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using GraphQL;
 using GraphQL.Types;
-using GraphQLTodoList.GraphQL.Middleware;
 using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
@@ -49,21 +48,6 @@ namespace GraphQLTodoList.GraphQL
                     options.Schema = _schema;
                     options.Query = query.Query;
                     options.Inputs = query.Variables != null ? query.Variables.ToString().ToInputs() : "".ToInputs();
-                    options.FieldMiddleware.Use((next) =>
-                    {
-                        return (context) =>
-                        {
-                            try
-                            {
-                                return next(context);
-                            }
-                            catch (Exception e)
-                            {
-                                context.Errors.Add(new ExecutionError(e.Message));
-                                return null;
-                            }
-                        };
-                    });
                 }).ConfigureAwait(false);
 
                 //if (result.Errors?.Count > 0) throw new BadRequestException(JsonConvert.SerializeObject(result));

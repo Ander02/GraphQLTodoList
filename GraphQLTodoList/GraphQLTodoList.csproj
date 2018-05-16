@@ -8,7 +8,6 @@
     <Folder Include="Features\Tasks\" />
     <Folder Include="Infraestructure\Filters\" />
     <Folder Include="Infraestructure\Middlewares\" />
-    <Folder Include="Infraestructure\Exceptions\" />
     <Folder Include="Mappers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -16,10 +15,10 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
-    <PackageReference Include="GraphQL" Version="0.17.3" />
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-899" />
     <PackageReference Include="graphiql" Version="1.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="OdeToCode.AddFeatureFolders" Version="2.0.1" />
   </ItemGroup>
 
