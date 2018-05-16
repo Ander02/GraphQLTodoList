@@ -40,7 +40,7 @@ namespace GraphQLTodoList.Features.Users
             {
                 var user = await _db.Users.Include(u => u.Tasks).Where(u => u.Id.Equals(query.Id)).FirstOrDefaultAsync();
 
-                if (user == null) throw new NotFoundException("User with id: " + query.Id + "doesn't exist");
+                if (user == null) throw new NotFoundException("User with id: " + query.Id + " doesn't exist");
 
                 return new UserResult.Full(user);
             }

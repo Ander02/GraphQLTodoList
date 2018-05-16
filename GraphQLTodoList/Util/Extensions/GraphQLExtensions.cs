@@ -18,7 +18,9 @@ namespace GraphQLTodoList.Util.Extensions
                 case InvalidArgumentException invalidArgumentEx:
                     errors.Add(new ExecutionError(invalidArgumentEx.Body));
                     break;
-
+                case NotFoundException notFoundEx:
+                    errors.Add(new ExecutionError(notFoundEx.Body));
+                    break;
                 case BaseException baseEx:
                     errors.AddRange(((List<ValidationFailure>)baseEx.Body).Select(validationFailure => new ExecutionError(validationFailure.ErrorMessage)));
                     break;

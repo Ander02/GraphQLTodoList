@@ -50,13 +50,13 @@ namespace GraphQLTodoList.Features.Users
                 _db = db;
             }
 
-            protected override async Task<List<UserResult.Full>> HandleCore(FindAll.Query query)
+            protected override async Task<List<UserResult.Full>> HandleCore(Query query)
             {
                 if (query == null) { }
 
                 var dbQuery = _db.Users.Include(u => u.Tasks).AsQueryable();
 
-                if (!query.ShowDeleteds) dbQuery = dbQuery.Where(u => u.DeletedAt != DateTime.MinValue).AsQueryable();
+                if (!query.ShowDeleteds) dbQuery = dbQuery.Where(u => u.DeletedAt.IsDefaultDateTimeValue()).AsQueryable();
 
                 dbQuery = dbQuery.OrderBy(u => u.Name);
                 dbQuery = dbQuery.Skip(query.Page * query.Limit).Take(query.Limit);

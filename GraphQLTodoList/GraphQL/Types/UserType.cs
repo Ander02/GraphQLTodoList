@@ -20,6 +20,7 @@ namespace GraphQLTodoList.GraphQL.Types
             Field<StringGraphType>(name: "Password", resolve: (context) => context.Source.Password);
 
             Field<DateGraphType>(name: "CreatedAt", resolve: (context) => context.Source.CreatedAt ?? default(DateTime));
+            Field<DateGraphType>(name: "DeletedAt", resolve: (context) => context.Source.DeletedAt ?? default(DateTime));
 
             Field<ListGraphType<TaskType>>(name: "Tasks", resolve: (context) => context.Source.Tasks);
         }

@@ -38,6 +38,28 @@ namespace GraphQLTodoList.GraphQL.Root
                     return result;
                 }));
 
+            //Delete User
+            FieldAsync<UserType>(
+                name: "DeleteUser",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "Id"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var command = new Delete.Command()
+                    {
+                        Id = resolveContext.GetArgument<Guid>("Id")
+                    };
+                    
+                    var result = await mediator.Send(command);
+
+                    return result;
+                }));
+
             #endregion
         }
     }
