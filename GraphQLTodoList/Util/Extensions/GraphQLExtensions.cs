@@ -11,7 +11,7 @@ namespace GraphQLTodoList.Util.Extensions
 {
     public static class GraphQLExtensions
     {
-        public static void AddGraphQLExceptionRange(this ExecutionErrors errors, Exception exception)
+        public static void AddGraphQLExceptions(this ExecutionErrors errors, Exception exception)
         {
             switch (exception)
             {
@@ -39,7 +39,7 @@ namespace GraphQLTodoList.Util.Extensions
             {
                 if (error == null)
                 {
-                    context.Errors.AddGraphQLExceptionRange(ex);
+                    context.Errors.AddGraphQLExceptions(ex);
 
                     return null;
                 }
