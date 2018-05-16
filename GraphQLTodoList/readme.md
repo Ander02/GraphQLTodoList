@@ -1,10 +1,10 @@
-#GraphQL Todo List Server
+# GraphQL Todo List Server
 
-##Exceptions e Erros - okay
+## Exceptions e Erros - okay
 	
 * Formas mais eficientes de tratar exceçães no sistema sem um try...catch em todo resolve
 
-###Solução encontrada
+### Solução encontrada
 
 * Método de Extensão de ResolveFieldContext para tratar e adicionar exceções aos errors
 >~~~C#
@@ -28,44 +28,44 @@
 >~~~
 
 * Uso 
->~~~
->Field(
+>~~~C#
+>FieldAsync(
 >	...
 >	resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
 >	{
-		//Faz algo que pode soltar uma exceção
+>		//Faz algo que pode soltar uma exceção
 >	})
 >)
 >~~~
 
-##Validação
+## Validação
 
 * Formas mais eficientes de tratar problemas de validação com fluent validator
 
-##Autenticação
+## Autenticação
 
 * Formas de se fazer autenticação no sistema
 
-##Autorização
+## Autorização
 
 * Formas de se fazer sistema de autorização para campos
 
-##Consultas performáticas
+## Consultas performáticas
 
 * Formas de se realizar consultas mais eficientes, otimizando os campos a serem buscados
 
-##Arquitetura de Arquivos
+## Arquitetura de Arquivos
 
-* Definir uma arquitetura de pastas e arquivos que facilite o entendimento do c�digo
+* Definir uma arquitetura de pastas e arquivos que facilite o entendimento do código
 
-##Relação dos tipos com Results, Querys e Commands
+## Relação dos tipos com Results, Querys e Commands
 
 * Criar uma forma mais eficiente de mapear os Results, Querys e Commands para GraphQL Types
 
-##Exemplo de CRUD
+## Exemplo de CRUD
 
 * Definir um exemplo de CRUD com relacionamento simples
 
-##Upload de arquivos
+## Upload de arquivos
 
 * Formas de se enviar uma mutation para file upload
