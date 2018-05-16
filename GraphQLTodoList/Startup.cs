@@ -57,12 +57,12 @@ namespace GraphQLTodoList
             #region GraphQL Config
 
             //GraphQL Types
-            services.AddTransient<UserType>();
-            services.AddTransient<TaskType>();
+            services.AddScoped<UserType>();
+            services.AddScoped<TaskType>();
 
             //Users Input Type
-            services.AddTransient<Features.Users.FindAll.InputType>();
-            services.AddTransient<Features.Users.Register.InputType>();
+            services.AddScoped<Features.Users.FindAll.InputType>();
+            services.AddScoped<Features.Users.Register.InputType>();
 
             //Roots
             services.AddScoped<RootQuery>();

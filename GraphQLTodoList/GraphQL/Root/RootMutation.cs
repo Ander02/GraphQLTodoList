@@ -24,7 +24,7 @@ namespace GraphQLTodoList.GraphQL.Root
                 name: "RegisterUser",
                 arguments: new QueryArguments
                 {
-                    new QueryArgument<Register.InputType>()
+                    new QueryArgument<NonNullGraphType<Register.InputType>>()
                     {
                         Name = "input"
                     }
@@ -34,15 +34,9 @@ namespace GraphQLTodoList.GraphQL.Root
                     var input = resolveContext.GetArgument<Register.Command>("input");
 
                     var result = await mediator.Send(input);
+
                     return result;
                 }));
-            //resolve: async (context) => await context.TryAsyncResolve(async (contextResolve) =>
-            //{
-            //    var input = contextResolve.GetArgument<Register.Command>("input");
-
-            //    var result = await mediator.Send(input);
-            //    return result;
-            //}));
 
             #endregion
         }

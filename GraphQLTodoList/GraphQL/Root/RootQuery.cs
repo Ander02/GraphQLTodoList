@@ -28,11 +28,12 @@ namespace GraphQLTodoList.GraphQL.Root
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
-                    var input = context.GetArgument<FindAll.Query>("params");
+                    var query = context.GetArgument("params", new FindAll.Query());
 
-                    var result = await mediator.Send(input);
+                    var result = await mediator.Send(query);
 
                     return result;
+
                 }));
 
             #endregion

@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 
 namespace GraphQLTodoList.Infraestructure.Exceptions
 {
-    public class BaseLogicException : Exception
+    public class BaseException : Exception
     {
         public int ErrorCode { get; set; }
         public dynamic Body { get; set; }
 
-        public BaseLogicException(int errorCode)
+        public BaseException(int errorCode)
         {
             this.ErrorCode = errorCode;
         }
 
-        public BaseLogicException(int errorCode, dynamic body) : this(errorCode)
+        public BaseException(int errorCode, dynamic body) : this(errorCode)
         {
             this.Body = body;
         }

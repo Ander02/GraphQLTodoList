@@ -29,7 +29,6 @@ namespace GraphQLTodoList.Features.Results
                 this.Age = user.Age;
                 this.CreatedAt = user.CreatedAt;
                 this.DeletedAt = user.DeletedAt;
-
             }
         }
 

@@ -52,7 +52,7 @@ namespace GraphQLTodoList.Features.Users
 
             protected override async Task<List<UserResult.Full>> HandleCore(FindAll.Query query)
             {
-                if (query == null) { }
+                if (query == null) {  }
 
                 var dbQuery = _db.Users.Include(u => u.Tasks).AsQueryable();
 

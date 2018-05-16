@@ -58,6 +58,8 @@ namespace GraphQLTodoList.Features.Users
 
             protected override async Task<UserResult.Full> HandleCore(Command command)
             {
+                if (command == null) throw new InvalidArgumentException("The argument is null");
+
                 var user = new User()
                 {
                     Age = command.Age,
