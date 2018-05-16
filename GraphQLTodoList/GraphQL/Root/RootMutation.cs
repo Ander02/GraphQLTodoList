@@ -54,7 +54,29 @@ namespace GraphQLTodoList.GraphQL.Root
                     {
                         Id = resolveContext.GetArgument<Guid>("Id")
                     };
-                    
+
+                    var result = await mediator.Send(command);
+
+                    return result;
+                }));
+
+            //Elimine User
+            FieldAsync<BooleanGraphType>(
+                name: "ElimineUser",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "Id"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var command = new Elimine.Command()
+                    {
+                        Id = resolveContext.GetArgument<Guid>("Id")
+                    };
+
                     var result = await mediator.Send(command);
 
                     return result;
