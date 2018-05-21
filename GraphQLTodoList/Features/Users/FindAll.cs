@@ -2,6 +2,7 @@
 using GraphQL.Types;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
+using GraphQLTodoList.Infraestructure.Exceptions;
 using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace GraphQLTodoList.Features.Users
 
             protected override async Task<List<UserResult.Full>> HandleCore(Query query)
             {
-                if (query == null) { }
+                if (query == null) throw new InvalidArgumentException("The argument is null");
 
                 var dbQuery = _db.Users.Include(u => u.Tasks).AsQueryable();
 

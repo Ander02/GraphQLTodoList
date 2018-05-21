@@ -30,7 +30,7 @@ namespace GraphQLTodoList
             #region Application Config
 
             services.AddMvc()
-            //.AddFeatureFolders()
+            .AddFeatureFolders()
             .AddFluentValidation(fvc => fvc.RegisterValidatorsFromAssemblyContaining<Startup>())
             .AddJsonOptions(options =>
             {
@@ -51,7 +51,6 @@ namespace GraphQLTodoList
             #endregion
 
             #region FluentValidator Config
-
             #endregion
 
             #region GraphQL Config
@@ -63,7 +62,8 @@ namespace GraphQLTodoList
             //Users Input Type
             services.AddScoped<Features.Users.FindAll.InputType>();
             services.AddScoped<Features.Users.Register.InputType>();
-
+            services.AddScoped<Features.Users.Update.InputType>();
+            
             //Roots
             services.AddScoped<RootQuery>();
             services.AddScoped<RootMutation>();

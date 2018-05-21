@@ -4,7 +4,6 @@ using GraphQLTodoList.Domain;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
 using GraphQLTodoList.Infraestructure.Exceptions;
-using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,18 +12,35 @@ using System.Threading.Tasks;
 
 namespace GraphQLTodoList.Features.Users
 {
-    public class Delete
+    public class Update
     {
         public class Command : IRequest<UserResult.Full>
         {
             public Guid Id { get; set; }
+            public string Name { get; set; }
+            public string Email { get; set; }
+            public int? Age { get; set; }
+        }
+
+        public class InputType : InputObjectGraphType<Command>
+        {
+            public InputType()
+            {
+                Name = "UpdateUserInputType";
+                Field<IntGraphType>(name: "Age");
+                Field<StringGraphType>(name: "Name");
+                Field<StringGraphType>(name: "Email");
+            }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                //Validations
+                RuleFor(u => u.Id).NotEmpty().NotNull();
+                RuleFor(u => u.Name).NotEmpty().NotNull();
+                RuleFor(u => u.Email).NotEmpty().NotNull().EmailAddress();
+                RuleFor(u => u.Age).NotEmpty().NotNull().GreaterThan(0);
             }
         }
 
@@ -43,11 +59,12 @@ namespace GraphQLTodoList.Features.Users
 
                 var user = await _db.Users.FindAsync(command.Id);
 
-                if (user == null) throw new NotFoundException("The user with Id: " + command.Id + " doesn't exist");
+                if (user == null) throw new NotFoundException("User with id: " + command.Id + " doesn't exist");
 
-                if (!user.DeletedAt.IsDefaultDateTimeValue()) throw new InvalidArgumentException("The user has already been deleted");
+                user.Name = command.Name ?? user.Name;
+                user.Email = command.Email ?? user.Email;
+                user.Age = command.Age ?? user.Age;
 
-                user.DeletedAt = DateTime.Now;
                 await _db.SaveChangesAsync();
 
                 return new UserResult.Full(user);

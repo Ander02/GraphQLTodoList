@@ -38,6 +38,32 @@ namespace GraphQLTodoList.GraphQL.Root
                     return result;
                 }));
 
+            //Update
+            FieldAsync<UserType>(
+                name: "UpdateUser",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "id"
+                    },
+                    new QueryArgument<NonNullGraphType<Update.InputType>>()
+                    {
+                        Name = "input"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var id = resolveContext.GetArgument<Guid>("id");
+                    var input = resolveContext.GetArgument<Update.Command>("input");
+
+                    input.Id = id;
+
+                    var result = await mediator.Send(input);
+
+                    return result;
+                }));
+
             //Delete User
             FieldAsync<UserType>(
                 name: "DeleteUser",
