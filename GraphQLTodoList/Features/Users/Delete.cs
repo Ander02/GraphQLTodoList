@@ -1,14 +1,10 @@
 ﻿using FluentValidation;
-using GraphQL.Types;
-using GraphQLTodoList.Domain;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
 using GraphQLTodoList.Infraestructure.Exceptions;
 using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GraphQLTodoList.Features.Users

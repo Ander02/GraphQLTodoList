@@ -1,12 +1,10 @@
 ﻿using FluentValidation;
-using GraphQL.Types;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
 using GraphQLTodoList.Infraestructure.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

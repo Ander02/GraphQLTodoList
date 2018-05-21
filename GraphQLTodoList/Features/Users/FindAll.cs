@@ -6,7 +6,6 @@ using GraphQLTodoList.Infraestructure.Exceptions;
 using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

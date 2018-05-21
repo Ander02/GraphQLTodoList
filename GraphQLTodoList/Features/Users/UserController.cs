@@ -28,5 +28,31 @@ namespace GraphQLTodoList.Features.Users
 
         [HttpGet]
         public async Task<List<UserResult.Full>> FindAll([FromQuery] FindAll.Query query) => await _mediator.Send(query);
+
+        [HttpGet("{id}")]
+        public async Task<UserResult.Full> FindById([FromRoute] FindById.Query query) => await _mediator.Send(query);
+
+        [HttpPut("{id}")]
+        public async Task<UserResult.Full> Update([FromRoute] Guid id, [FromBody] Update.Command command)
+        {
+            command.Id = id;
+            return await _mediator.Send(command);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromBody] Update.Command command)
+        {
+            await _mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete("/kill/{id}")]
+        public async Task<IActionResult> Remove([FromBody] Elimine.Command command)
+        {
+            await _mediator.Send(command);
+
+            return NoContent();
+        }
     }
 }
