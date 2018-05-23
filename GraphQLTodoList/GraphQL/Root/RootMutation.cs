@@ -71,14 +71,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
                     {
-                        Name = "Id"
+                        Name = "id"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var command = new Features.Users.Delete.Command()
                     {
-                        Id = resolveContext.GetArgument<Guid>("Id")
+                        Id = resolveContext.GetArgument<Guid>("id")
                     };
 
                     var result = await mediator.Send(command);
@@ -93,14 +93,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
                     {
-                        Name = "Id"
+                        Name = "id"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var command = new Features.Users.Elimine.Command()
                     {
-                        Id = resolveContext.GetArgument<Guid>("Id")
+                        Id = resolveContext.GetArgument<Guid>("id")
                     };
 
                     var result = await mediator.Send(command);
@@ -163,14 +163,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
                     {
-                        Name = "Id"
+                        Name = "id"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var command = new Features.Tasks.Delete.Command()
                     {
-                        Id = resolveContext.GetArgument<Guid>("Id")
+                        Id = resolveContext.GetArgument<Guid>("id")
                     };
 
                     var result = await mediator.Send(command);
@@ -185,14 +185,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
                     {
-                        Name = "Id"
+                        Name = "id"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var command = new Features.Tasks.Elimine.Command()
                     {
-                        Id = resolveContext.GetArgument<Guid>("Id")
+                        Id = resolveContext.GetArgument<Guid>("id")
                     };
 
                     var result = await mediator.Send(command);

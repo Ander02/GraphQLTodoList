@@ -13,12 +13,7 @@ namespace GraphQLTodoList.GraphQL.Root
     {
         public RootQuery(IMediator mediator)
         {
-            #region Hello
-            Field<StringGraphType>(
-                name: "Init",
-                resolve: (context) => "Hello World GraphQL"
-                );
-            #endregion
+            Field<StringGraphType>(name: "Init", resolve: (context) => "Hello World GraphQL");
 
             #region Users         
             //Find All
@@ -47,14 +42,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
                     {
-                        Name = "Id"
+                        Name = "id"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var query = new Features.Users.FindById.Query
                     {
-                        Id = context.GetArgument<Guid>("Id")
+                        Id = context.GetArgument<Guid>("id")
                     };
 
                     var result = await mediator.Send(query);
@@ -90,14 +85,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
                     {
-                        Name = "Id"
+                        Name = "id"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var query = new Features.Tasks.FindById.Query
                     {
-                        Id = context.GetArgument<Guid>("Id")
+                        Id = context.GetArgument<Guid>("id")
                     };
 
                     var result = await mediator.Send(query);
