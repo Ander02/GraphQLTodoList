@@ -5,14 +5,8 @@ namespace GraphQLTodoList.Util.Comparators
 {
     public class EqualityComparerPropertyInfoName : IEqualityComparer<PropertyInfo>
     {
-        public bool Equals(PropertyInfo x, PropertyInfo y)
-        {
-            return x.Name.Equals(y.Name);
-        }
+        public bool Equals(PropertyInfo x, PropertyInfo y) => x.Name.Equals(y.Name);
 
-        public int GetHashCode(PropertyInfo obj)
-        {
-            return obj.Name.GetHashCode();
-        }
+        public int GetHashCode(PropertyInfo obj) => obj.Name.GetHashCode();
     }
 }
