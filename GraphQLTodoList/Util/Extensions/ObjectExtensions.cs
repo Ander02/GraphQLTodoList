@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using GraphQLTodoList.Util.Comparators;
+using Newtonsoft.Json;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace GraphQLTodoList.Util.Extensions
 {
@@ -19,7 +16,7 @@ namespace GraphQLTodoList.Util.Extensions
             var dataProps = data.GetType().GetProperties().OrderBy(p => p.Name).ToArray();
 
             //Pegar todos os atributos em update que tem em data
-            var targetProps = update.GetType().GetProperties().Intersect(dataProps, new EqualityComparerReflectionPropByName()).OrderBy(p => p.Name).ToArray();
+            var targetProps = update.GetType().GetProperties().Intersect(dataProps, new EqualityComparerPropertyInfoName()).OrderBy(p => p.Name).ToArray();
 
             //Para cada atributo
             for (int i = 0; i < dataProps.Length; i++)
@@ -35,19 +32,6 @@ namespace GraphQLTodoList.Util.Extensions
                     if (dataValue != null) targetProp.SetMethod.Invoke(update, new object[] { dataValue });
                 }
             }
-        }
-    }
-
-    class EqualityComparerReflectionPropByName : IEqualityComparer<PropertyInfo>
-    {
-        public bool Equals(PropertyInfo x, PropertyInfo y)
-        {
-            return x.Name.Equals(y.Name);
-        }
-
-        public int GetHashCode(PropertyInfo obj)
-        {
-            return obj.Name.GetHashCode();
         }
     }
 }
