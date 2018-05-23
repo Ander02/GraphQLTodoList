@@ -1,5 +1,5 @@
 ﻿using GraphQL.Types;
-using GraphQLTodoList.Features.Users;
+using GraphQLTodoList.Features;
 using GraphQLTodoList.GraphQL.Types;
 using GraphQLTodoList.Util.Extensions;
 using MediatR;
@@ -24,14 +24,14 @@ namespace GraphQLTodoList.GraphQL.Root
                 name: "RegisterUser",
                 arguments: new QueryArguments
                 {
-                    new QueryArgument<NonNullGraphType<Register.InputType>>()
+                    new QueryArgument<NonNullGraphType<Features.Users.Register.InputType>>()
                     {
                         Name = "input"
                     }
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
-                    var input = resolveContext.GetArgument<Register.Command>("input");
+                    var input = resolveContext.GetArgument<Features.Users.Register.Command>("input");
 
                     var result = await mediator.Send(input);
 
@@ -47,7 +47,7 @@ namespace GraphQLTodoList.GraphQL.Root
                     {
                         Name = "id"
                     },
-                    new QueryArgument<NonNullGraphType<Update.InputType>>()
+                    new QueryArgument<NonNullGraphType<Features.Users.Update.InputType>>()
                     {
                         Name = "input"
                     }
@@ -55,7 +55,7 @@ namespace GraphQLTodoList.GraphQL.Root
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
                     var id = resolveContext.GetArgument<Guid>("id");
-                    var input = resolveContext.GetArgument<Update.Command>("input");
+                    var input = resolveContext.GetArgument<Features.Users.Update.Command>("input");
 
                     input.Id = id;
 
@@ -64,7 +64,7 @@ namespace GraphQLTodoList.GraphQL.Root
                     return result;
                 }));
 
-            //Delete User
+            //Delete
             FieldAsync<UserType>(
                 name: "DeleteUser",
                 arguments: new QueryArguments
@@ -76,7 +76,7 @@ namespace GraphQLTodoList.GraphQL.Root
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
-                    var command = new Delete.Command()
+                    var command = new Features.Users.Delete.Command()
                     {
                         Id = resolveContext.GetArgument<Guid>("Id")
                     };
@@ -86,9 +86,9 @@ namespace GraphQLTodoList.GraphQL.Root
                     return result;
                 }));
 
-            //Elimine User
+            //Remove
             FieldAsync<BooleanGraphType>(
-                name: "ElimineUser",
+                name: "RemoveUser",
                 arguments: new QueryArguments
                 {
                     new QueryArgument<NonNullGraphType<IdGraphType>>()
@@ -98,7 +98,99 @@ namespace GraphQLTodoList.GraphQL.Root
                 },
                 resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
                 {
-                    var command = new Elimine.Command()
+                    var command = new Features.Users.Elimine.Command()
+                    {
+                        Id = resolveContext.GetArgument<Guid>("Id")
+                    };
+
+                    var result = await mediator.Send(command);
+
+                    return result;
+                }));
+
+            #endregion
+
+            #region Tasks
+
+            //Register
+            FieldAsync<TaskType>(
+                name: "RegisterTask",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<Features.Tasks.Register.InputType>>()
+                    {
+                        Name = "input"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var input = resolveContext.GetArgument<Features.Tasks.Register.Command>("input");
+
+                    var result = await mediator.Send(input);
+
+                    return result;
+                }));
+
+            //Update
+            FieldAsync<TaskType>(
+                name: "UpdateTask",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "id"
+                    },
+                    new QueryArgument<NonNullGraphType<Features.Tasks.Update.InputType>>()
+                    {
+                        Name = "input"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var id = resolveContext.GetArgument<Guid>("id");
+                    var input = resolveContext.GetArgument<Features.Tasks.Update.Command>("input");
+
+                    input.Id = id;
+                    var result = await mediator.Send(input);
+
+                    return result;
+                }));
+
+            //Delete
+            FieldAsync<TaskType>(
+                name: "DeleteTask",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "Id"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var command = new Features.Tasks.Delete.Command()
+                    {
+                        Id = resolveContext.GetArgument<Guid>("Id")
+                    };
+
+                    var result = await mediator.Send(command);
+
+                    return result;
+                }));
+
+            //Remove
+            FieldAsync<BooleanGraphType>(
+                name: "RemoveTask",
+                arguments: new QueryArguments
+                {
+                    new QueryArgument<NonNullGraphType<IdGraphType>>()
+                    {
+                        Name = "Id"
+                    }
+                },
+                resolve: async (context) => await context.TryResolveAsync(async (resolveContext) =>
+                {
+                    var command = new Features.Tasks.Elimine.Command()
                     {
                         Id = resolveContext.GetArgument<Guid>("Id")
                     };

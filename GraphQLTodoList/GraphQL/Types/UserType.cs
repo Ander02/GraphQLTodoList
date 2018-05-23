@@ -1,5 +1,6 @@
 ﻿using GraphQL.Types;
 using GraphQLTodoList.Features.Results;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace GraphQLTodoList.GraphQL.Types
 {
     public class UserType : ObjectGraphType<UserResult.Full>
     {
-        public UserType()
+        public UserType(IMediator mediator)
         {
             Field<IdGraphType>(name: "Id", resolve: (context) => context.Source.Id);
 

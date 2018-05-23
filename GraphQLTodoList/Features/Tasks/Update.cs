@@ -58,6 +58,8 @@ namespace GraphQLTodoList.Features.Tasks
 
                 if (task == null) throw new NotFoundException("The " + nameof(task) + " with id: " + command.Id + " doesn't exist");
 
+                if (!task.DeletedAt.IsDefaultDateTime()) throw new InvalidArgumentException("The " + nameof(task) + " is deleted");
+
                 //task.Name = command.Name ?? task.Name;
                 //task.Description = command.Description ?? task.Description;
 

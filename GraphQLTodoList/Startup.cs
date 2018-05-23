@@ -63,7 +63,12 @@ namespace GraphQLTodoList
             services.AddScoped<Features.Users.FindAll.InputType>();
             services.AddScoped<Features.Users.Register.InputType>();
             services.AddScoped<Features.Users.Update.InputType>();
-            
+
+            //Tasks Input Type
+            services.AddScoped<Features.Tasks.FindAll.InputType>();
+            services.AddScoped<Features.Tasks.Register.InputType>();
+            services.AddScoped<Features.Tasks.Update.InputType>();
+
             //Roots
             services.AddScoped<RootQuery>();
             services.AddScoped<RootMutation>();

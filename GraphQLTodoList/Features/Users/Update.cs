@@ -60,8 +60,10 @@ namespace GraphQLTodoList.Features.Users
 
                 var user = await _db.Users.FindAsync(command.Id);
 
-                if (user == null) throw new NotFoundException("User with id: " + command.Id + " doesn't exist");
+                if (user == null) throw new NotFoundException("The " + nameof(user) + " with id: " + command.Id + " doesn't exist");
 
+                if (!user.DeletedAt.IsDefaultDateTime()) throw new InvalidArgumentException("The" + nameof(user) + "is deleted");
+                
                 //user.Name = command.Name ?? user.Name;
                 //user.Email = command.Email ?? user.Email;
                 //user.Age = command.Age ?? user.Age;
