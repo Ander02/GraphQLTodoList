@@ -8,11 +8,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Users
+namespace GraphQLTodoList.Features.Tasks
 {
     public class FindById
     {
-        public class Query : IRequest<UserResult.Full>
+        public class Query : IRequest<TaskResult.Full>
         {
             public Guid Id { get; set; }
         }
@@ -25,7 +25,7 @@ namespace GraphQLTodoList.Features.Users
             }
         }
 
-        public class Handler : AsyncRequestHandler<Query, UserResult.Full>
+        public class Handler : AsyncRequestHandler<Query, TaskResult.Full>
         {
             private readonly Db _db;
 
@@ -34,15 +34,15 @@ namespace GraphQLTodoList.Features.Users
                 _db = db;
             }
 
-            protected override async Task<UserResult.Full> HandleCore(Query query)
+            protected override async Task<TaskResult.Full> HandleCore(Query query)
             {
                 if (query == null) throw new InvalidArgumentException("The argument is null");
 
-                var user = await _db.Users.Include(u => u.Tasks).Where(u => u.Id.Equals(query.Id)).FirstOrDefaultAsync();
+                var task = await _db.Tasks.Include(t => t.User).Where(t => t.Id.Equals(query.Id)).FirstOrDefaultAsync();
 
-                if (user == null) throw new NotFoundException("The " + nameof(user) + " with id: " + query.Id + " doesn't exist");
+                if (task == null) throw new NotFoundException("The " + nameof(task) + " with id: " + query.Id + " doesn't exist");
 
-                return new UserResult.Full(user);
+                return new TaskResult.Full(task);
             }
         }
     }

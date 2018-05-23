@@ -10,11 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Users
+namespace GraphQLTodoList.Features.Tasks
 {
     public class FindAll
     {
-        public class Query : BaseFindManyQuery, IRequest<List<UserResult.Full>>
+        public class Query : BaseFindManyQuery, IRequest<List<TaskResult.Full>>
         {
 
         }
@@ -23,7 +23,7 @@ namespace GraphQLTodoList.Features.Users
         {
             public InputType()
             {
-                Name = "FindAllUsersInputType";
+                Name = "FindAllTasksInputType";
 
                 Field<BooleanGraphType>(name: "ShowDeleteds");
                 Field<IntGraphType>(name: "Limit");
@@ -39,7 +39,7 @@ namespace GraphQLTodoList.Features.Users
             }
         }
 
-        public class Handler : AsyncRequestHandler<Query, List<UserResult.Full>>
+        public class Handler : AsyncRequestHandler<Query, List<TaskResult.Full>>
         {
             private readonly Db _db;
 
@@ -48,18 +48,18 @@ namespace GraphQLTodoList.Features.Users
                 _db = db;
             }
 
-            protected override async Task<List<UserResult.Full>> HandleCore(Query query)
+            protected override async Task<List<TaskResult.Full>> HandleCore(Query query)
             {
                 if (query == null) throw new InvalidArgumentException("The argument is null");
 
-                var dbQuery = _db.Users.Include(u => u.Tasks).AsQueryable();
+                var dbQuery = _db.Tasks.Include(u => u.User).AsQueryable();
 
                 if (!query.ShowDeleteds) dbQuery = dbQuery.Where(u => u.DeletedAt.IsDefaultDateTime()).AsQueryable();
 
                 dbQuery = dbQuery.OrderBy(u => u.Name);
                 dbQuery = dbQuery.Skip(query.Page * query.Limit).Take(query.Limit);
 
-                return (await dbQuery.ToListAsync()).Select(u => new UserResult.Full(u)).ToList();
+                return (await dbQuery.ToListAsync()).Select(t => new TaskResult.Full(t)).ToList();
             }
         }
     }

@@ -2,17 +2,16 @@
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
 using GraphQLTodoList.Infraestructure.Exceptions;
+using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Users
+namespace GraphQLTodoList.Features.Tasks
 {
-    public class Elimine
+    public class Delete
     {
-        public class Command : IRequest<bool>
+        public class Command : IRequest<TaskResult.Full>
         {
             public Guid Id { get; set; }
         }
@@ -25,7 +24,7 @@ namespace GraphQLTodoList.Features.Users
             }
         }
 
-        public class Handler : AsyncRequestHandler<Command, bool>
+        public class Handler : AsyncRequestHandler<Command, TaskResult.Full>
         {
             private readonly Db _db;
 
@@ -34,18 +33,20 @@ namespace GraphQLTodoList.Features.Users
                 _db = db;
             }
 
-            protected override async Task<bool> HandleCore(Command command)
+            protected override async Task<TaskResult.Full> HandleCore(Command command)
             {
                 if (command == null) throw new InvalidArgumentException("The argument is null");
 
-                var user = await _db.Users.FindAsync(command.Id);
+                var task = await _db.Tasks.FindAsync(command.Id);
 
-                if (user == null) throw new NotFoundException("The " + nameof(user) + " with Id: " + command.Id + " doesn't exist");
+                if (task == null) throw new NotFoundException("The " + nameof(task) + " with Id: " + command.Id + " doesn't exist");
 
-                _db.Users.Remove(user);
+                if (!task.DeletedAt.IsDefaultDateTime()) throw new InvalidArgumentException("The " + nameof(task) + " has already been deleted");
+
+                task.DeletedAt = DateTime.Now;
                 await _db.SaveChangesAsync();
 
-                return true;
+                return new TaskResult.Full(task);
             }
         }
     }

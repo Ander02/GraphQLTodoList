@@ -35,13 +35,13 @@ namespace GraphQLTodoList.Features.Users
 
             protected override async Task<UserResult.Full> HandleCore(Command command)
             {
-                if (command == null) throw new InvalidArgumentException("The argument is null");
-
+                if (command == null) throw new InvalidArgumentException("The " + nameof(command) + " is null");
+                
                 var user = await _db.Users.FindAsync(command.Id);
 
                 if (user == null) throw new NotFoundException("The user with Id: " + command.Id + " doesn't exist");
 
-                if (!user.DeletedAt.IsDefaultDateTimeValue()) throw new InvalidArgumentException("The user has already been deleted");
+                if (!user.DeletedAt.IsDefaultDateTime()) throw new InvalidArgumentException("The " + nameof(user) + " has already been deleted");
 
                 user.DeletedAt = DateTime.Now;
                 await _db.SaveChangesAsync();

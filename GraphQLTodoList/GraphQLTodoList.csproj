@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Tasks\" />
     <Folder Include="Infraestructure\Filters\" />
     <Folder Include="Infraestructure\Middlewares\" />
     <Folder Include="Mappers\" />

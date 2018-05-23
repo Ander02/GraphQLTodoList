@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace GraphQLTodoList.Util.Extensions
 {
-    public static class DateTimeExtensions
+    public static class EnumExtensions
     {
-        public static bool IsDefaultDateTime(this DateTime date) => date.Equals(default(DateTime));
+        public static string GetName(this Enum value) => Enum.GetName(typeof(Enum), value);
     }
 }

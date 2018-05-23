@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Users
+namespace GraphQLTodoList.Features.Tasks
 {
     public class Elimine
     {
@@ -38,11 +38,11 @@ namespace GraphQLTodoList.Features.Users
             {
                 if (command == null) throw new InvalidArgumentException("The argument is null");
 
-                var user = await _db.Users.FindAsync(command.Id);
+                var task = await _db.Tasks.FindAsync(command.Id);
 
-                if (user == null) throw new NotFoundException("The " + nameof(user) + " with Id: " + command.Id + " doesn't exist");
+                if (task == null) throw new NotFoundException("The " + nameof(task) + " with Id: " + command.Id + " doesn't exist");
 
-                _db.Users.Remove(user);
+                _db.Tasks.Remove(task);
                 await _db.SaveChangesAsync();
 
                 return true;

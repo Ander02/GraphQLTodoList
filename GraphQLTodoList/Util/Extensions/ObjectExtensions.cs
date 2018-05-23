@@ -1,4 +1,5 @@
-﻿using GraphQLTodoList.Util.Comparators;
+﻿using GraphQLTodoList.Infraestructure.Exceptions;
+using GraphQLTodoList.Util.Comparators;
 using Newtonsoft.Json;
 using System.Linq;
 

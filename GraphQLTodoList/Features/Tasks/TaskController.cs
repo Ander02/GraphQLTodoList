@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQLTodoList.Features.Users
+namespace GraphQLTodoList.Features.Tasks
 {
     [Route("[controller]")]
-    public class UserController : Controller
+    public class TasksController : Controller
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        public TasksController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -27,13 +27,13 @@ namespace GraphQLTodoList.Features.Users
         }
 
         [HttpGet]
-        public async Task<List<UserResult.Full>> FindAll([FromQuery] FindAll.Query query) => await _mediator.Send(query);
+        public async Task<List<TaskResult.Full>> FindAll([FromQuery] FindAll.Query query) => await _mediator.Send(query);
 
         [HttpGet("{id}")]
-        public async Task<UserResult.Full> FindById([FromRoute] FindById.Query query) => await _mediator.Send(query);
+        public async Task<TaskResult.Full> FindById([FromRoute] FindById.Query query) => await _mediator.Send(query);
 
         [HttpPut("{id}")]
-        public async Task<UserResult.Full> Update([FromRoute] Guid id, [FromBody] Update.Command command)
+        public async Task<TaskResult.Full> Update([FromRoute] Guid id, [FromBody] Update.Command command)
         {
             command.Id = id;
             return await _mediator.Send(command);
