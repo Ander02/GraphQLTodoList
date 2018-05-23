@@ -4,6 +4,7 @@ using GraphQLTodoList.Domain;
 using GraphQLTodoList.Features.Results;
 using GraphQLTodoList.Infraestructure.Database;
 using GraphQLTodoList.Infraestructure.Exceptions;
+using GraphQLTodoList.Util.Extensions;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -61,9 +62,11 @@ namespace GraphQLTodoList.Features.Users
 
                 if (user == null) throw new NotFoundException("User with id: " + command.Id + " doesn't exist");
 
-                user.Name = command.Name ?? user.Name;
-                user.Email = command.Email ?? user.Email;
-                user.Age = command.Age ?? user.Age;
+                //user.Name = command.Name ?? user.Name;
+                //user.Email = command.Email ?? user.Email;
+                //user.Age = command.Age ?? user.Age;
+
+                user.UpdatePropsByReflection(command);
 
                 await _db.SaveChangesAsync();
 
